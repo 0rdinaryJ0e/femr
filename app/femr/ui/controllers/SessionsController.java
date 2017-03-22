@@ -55,7 +55,6 @@ public class SessionsController extends Controller {
 
         if (response.hasErrors()) {
             createViewModelForm.reject("Invalid username or password");
-            System.out.println(createViewModelForm.toString());
             return ok(create.render(createViewModelForm));
         }else{
             IUser user = userService.retrieveById(response.getResponseObject().getId());
