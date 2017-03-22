@@ -12,8 +12,8 @@
             <h1>Please sign in</h1>
             <input type="text" name="email" placeholder="Email" />
             <input type="password" name="password" placeholder="Password" />
-            @if(true) {
-                <p class="error">This error sucks</p>
+            @if(createForm != null && createForm.hasErrors) {
+                <p class="error">@createForm.globalError.message</p>
             }
             <input type="submit" value="Log in" />
             <img src="@routes.Assets.versioned("img/logo_color_sm.png")" />

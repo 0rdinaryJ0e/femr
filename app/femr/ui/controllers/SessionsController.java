@@ -49,12 +49,12 @@ public class SessionsController extends Controller {
 
     public Result createPost() {
 
-        final Form<CreateViewModel> createViewModelForm = formFactory.form(CreateViewModel.class).bindFromRequest();
-        CreateViewModel viewModel = createViewModelForm.get();
+        final Form<CreateViewModel> createViewModelForm = formFactory.form(CreateViewModel.class);
+        CreateViewModel viewModel = createViewModelForm.bindFromRequest().get();
         ServiceResponse<CurrentUser> response = sessionsService.createSession(viewModel.getEmail(), viewModel.getPassword(), request().remoteAddress());
 
         if (response.hasErrors()) {
-            createViewModelForm.fill(viewModel);
+            createViewModelForm.reject("Invalid username or password");
             System.out.println(createViewModelForm.toString());
             return ok(create.render(createViewModelForm));
         }else{
