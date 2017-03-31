@@ -1,6 +1,10 @@
 @(feet: java.lang.String, inches: java.lang.String, isMetric: java.lang.Boolean = false, emptyValue: java.lang.String = "N/A")
 
 
+    @if(feet.equals('0) && inches.equals('0)) {
+        feet = null
+        inches = null
+    }
     @if(isMetric) {
         @if(feet == null || inches == null || feet.equals("null") || inches.equals("null")) {
             @emptyValue
