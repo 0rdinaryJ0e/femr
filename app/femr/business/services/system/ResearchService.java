@@ -362,7 +362,7 @@ public class ResearchService implements IResearchService {
             response.setResponseObject(results);
 
         } catch (Exception ex) {
-
+            ex.printStackTrace();
             response.addError("exception", ex.getMessage());
         }
 
@@ -787,7 +787,10 @@ public class ResearchService implements IResearchService {
         Set<Integer> patientIds = new HashSet<>();
 
         // Loop through encounters, get data and build stats
-        Function<IResearchEncounter, Float> valueFunc = (IResearchEncounter e) -> e.getEncounterVitals().get(vital.getId()).getVitalValue();
+        Function<IResearchEncounter, Float> valueFunc = (IResearchEncounter e) -> { ResearchEncounterVital v = e.getEncounterVitals().get(vital.getId());
+                                                                                    if (v == null) return null;
+                                                                                    return v.getVitalValue();
+                                                                                    };
         ResearchResultSetItem resultSet = buildResultSet(encounters, filters, datasetBuilder, patientIds, valueFunc);
         resultSet.setDataType(vitalName);
         resultSet.setUnitOfMeasurement(vital.getUnitOfMeasurement());
